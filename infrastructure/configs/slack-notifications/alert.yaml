@@ -1,0 +1,20 @@
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  name: slack-notification
+  namespace: flux-system
+spec:
+  providerRef:
+    name: slack-bot
+  eventSeverity: info
+  eventSources:
+    - kind: GitRepository
+      name: "*"
+    - kind: Kustomization
+      name: "*"
+    - kind: HelmRelease
+      name: "*"
+  exclusionList:
+    - "no changes since last reconciliation"
+    - "dependency .* is not ready"

@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard
+  namespace: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-auth@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: traefik.local.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: traefik
+                port:
+                  name: traefik
+  tls:
+    - secretName: traefik-dashboard-tls
+      hosts:
+        - traefik.local.example.com

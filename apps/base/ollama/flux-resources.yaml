@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ollama
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: open-webui
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://helm.openwebui.com/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ollama
+  namespace: ollama
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: open-webui
+      version: "3.x"
+      sourceRef:
+        kind: HelmRepository
+        name: open-webui
+        namespace: flux-system
+      interval: 12h
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - host: ai.local.example.com
+          paths:
+            - path: /
+              pathType: Prefix
+    # Add your values here
+    # See chart documentation for available values

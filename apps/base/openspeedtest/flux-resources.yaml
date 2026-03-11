@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openspeedtest
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: openspeedtest
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://openspeedtest.github.io/helm-charts/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openspeedtest
+  namespace: openspeedtest
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: openspeedtest
+      version: "1.x"
+      sourceRef:
+        kind: HelmRepository
+        name: openspeedtest
+        namespace: flux-system
+      interval: 12h
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - host: speedtest.local.example.com
+          paths:
+            - path: /
+              pathType: Prefix
+    # Add your values here
+    # See chart documentation for available values

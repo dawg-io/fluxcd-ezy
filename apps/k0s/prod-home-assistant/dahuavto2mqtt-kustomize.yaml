@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dahuavto2mqtt
+  namespace: home-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dahuavto2mqtt
+  template:
+    metadata:
+      labels:
+        app: dahuavto2mqtt
+    spec:
+      containers:
+        - name: dahuavto2mqtt
+          image: elad-bar/dahuavto2mqtt:latest
+          env:
+            - name: VTO_HOST
+              value: "<YOUR_DAHUA_VTO_IP>"
+            - name: VTO_USERNAME
+              value: "admin"
+            - name: VTO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dahuavto2mqtt-secret
+                  key: vto-password
+            - name: MQTT_BROKER_HOST
+              value: "<YOUR_MQTT_BROKER_HOST>"
+            - name: MQTT_BROKER_USERNAME
+              value: "mqtt-user"
+            - name: MQTT_BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dahuavto2mqtt-secret
+                  key: mqtt-password
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi

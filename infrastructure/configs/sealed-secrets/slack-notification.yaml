@@ -1,0 +1,12 @@
+# Placeholder - create a SealedSecret for the Slack webhook URL
+# kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets-controller \
+#   --format yaml < slack-webhook-secret.yaml > slack-notification.yaml
+#
+# The decrypted secret should look like:
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: slack-webhook-url
+#   namespace: flux-system
+# stringData:
+#   address: https://hooks.slack.com/services/<YOUR_SLACK_WEBHOOK_PATH>

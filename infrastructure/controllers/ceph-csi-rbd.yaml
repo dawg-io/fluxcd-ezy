@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ceph-csi-rbd
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: ceph-csi-charts
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://ceph.github.io/csi-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ceph-csi-rbd
+  namespace: ceph-csi-rbd
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ceph-csi-rbd
+      version: "3.x"
+      sourceRef:
+        kind: HelmRepository
+        name: ceph-csi-charts
+        namespace: flux-system
+      interval: 12h
+  values:
+    csiConfig:
+      - clusterID: "<YOUR_CEPH_CLUSTER_ID>"
+        monitors:
+          - "<YOUR_CEPH_MONITOR_IP_1>"
+          - "<YOUR_CEPH_MONITOR_IP_2>"
+          - "<YOUR_CEPH_MONITOR_IP_3>"
+    storageClass:
+      create: true
+      name: ceph-block
+      clusterID: "<YOUR_CEPH_CLUSTER_ID>"
+      pool: "<YOUR_CEPH_RBD_POOL_NAME>"
+      imageFeatures: layering
+      reclaimPolicy: Delete
+      allowVolumeExpansion: true
+    secret:
+      create: true
+      name: csi-rbd-secret
+      userID: "<YOUR_CEPH_USER_ID>"
+      userKey: "<YOUR_CEPH_RBD_USER_KEY>"
+      adminID: "<YOUR_CEPH_ADMIN_ID>"
+      adminKey: "<YOUR_CEPH_RBD_ADMIN_KEY>"

@@ -1,0 +1,6 @@
+# Traefik Helm values - these are merged with the values in helm-release.yaml
+# See https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+# for the full list of available values.
+
+# Override specific values here that differ per environment
+# For environment-specific overrides, use kustomize patches in the overlay directories

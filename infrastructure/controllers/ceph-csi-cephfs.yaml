@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ceph-csi-cephfs
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ceph-csi-cephfs
+  namespace: ceph-csi-cephfs
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ceph-csi-cephfs
+      version: "3.x"
+      sourceRef:
+        kind: HelmRepository
+        name: ceph-csi-charts
+        namespace: flux-system
+      interval: 12h
+  values:
+    csiConfig:
+      - clusterID: "<YOUR_CEPH_CLUSTER_ID>"
+        monitors:
+          - "<YOUR_CEPH_MONITOR_IP_1>"
+          - "<YOUR_CEPH_MONITOR_IP_2>"
+          - "<YOUR_CEPH_MONITOR_IP_3>"
+    storageClass:
+      create: true
+      name: ceph-filesystem
+      clusterID: "<YOUR_CEPH_CLUSTER_ID>"
+      fsName: "<YOUR_CEPHFS_NAME>"
+      reclaimPolicy: Delete
+      allowVolumeExpansion: true
+    secret:
+      create: true
+      name: csi-cephfs-secret
+      adminID: "<YOUR_CEPH_ADMIN_ID>"
+      adminKey: "<YOUR_CEPH_CEPHFS_USER_KEY>"

@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kasten-io
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: kasten
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://charts.kasten.io/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: k10
+      version: "7.x"
+      sourceRef:
+        kind: HelmRepository
+        name: kasten
+        namespace: flux-system
+      interval: 12h
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - host: k10.local.example.com
+          paths:
+            - path: /
+              pathType: Prefix
+    # Add your values here
+    # See chart documentation for available values

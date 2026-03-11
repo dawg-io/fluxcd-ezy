@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: home-assistant
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: bjw-s
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://bjw-s.github.io/helm-charts/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: home-assistant
+      version: "3.x"
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 12h
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - host: ha.local.example.com
+          paths:
+            - path: /
+              pathType: Prefix
+    service:
+      annotations:
+        # MetalLB v0.13+ annotation to request a specific IP from the pool
+        # Use plural 'loadBalancerIPs' — this is correct for MetalLB v0.13+
+        metallb.universe.tf/loadBalancerIPs: "<YOUR_HOME_ASSISTANT_LB_IP>"
+    # Add your values here
+    # See chart documentation for available values

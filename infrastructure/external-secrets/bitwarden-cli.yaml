@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitwarden-cli
+  namespace: external-secrets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitwarden-cli
+  template:
+    metadata:
+      labels:
+        app: bitwarden-cli
+    spec:
+      containers:
+        - name: bitwarden-cli
+          # Pin to a specific version for reproducibility.
+          # Check latest releases: https://github.com/larivierec/bitwarden-cli/releases
+          image: ghcr.io/larivierec/bitwarden-cli:<YOUR_BITWARDEN_CLI_VERSION>  # renovate: datasource=docker
+          env:
+            - name: BW_HOST
+              value: "https://vault.bitwarden.com"
+            - name: BW_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-credentials
+                  key: clientId
+            - name: BW_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-credentials
+                  key: clientSecret
+            - name: BW_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-credentials
+                  key: password
+          ports:
+            - containerPort: 8087
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bitwarden-cli
+  namespace: external-secrets
+spec:
+  selector:
+    app: bitwarden-cli
+  ports:
+    - port: 8087
+      targetPort: 8087

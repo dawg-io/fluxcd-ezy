@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - prod-capacitor/
+  - prod-code-server/
+  - prod-github-arc/
+  - prod-home-assistant/
+  - prod-k10/
+  - prod-kubernetes-dashboard/
+  - prod-mealie/
+  - prod-nextcloud/
+  - prod-ollama/
+  - prod-openspeedtest/
+  - prod-portainer/
+  - prod-sonarqube/
+  - prod-speedtest-tracker/
+  - prod-uptime-kuma/
+  - prod-wordpress/
+  - prod-cloudflare-tunnel/
