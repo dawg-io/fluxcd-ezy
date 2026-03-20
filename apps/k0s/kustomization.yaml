@@ -8,12 +8,17 @@ resources:
   - prod-k10/
   - prod-kubernetes-dashboard/
   - prod-mealie/
+  - prod-mosquitto/
   - prod-nextcloud/
   - prod-ollama/
+  - prod-ookla-speedtest/
   - prod-openspeedtest/
   - prod-portainer/
   - prod-sonarqube/
   - prod-speedtest-tracker/
   - prod-uptime-kuma/
   - prod-wordpress/
+  - prod-zigbee2mqtt/
+  - prod-zwave-js-ui/
+  - prod-ups-nut/
   - prod-cloudflare-tunnel/

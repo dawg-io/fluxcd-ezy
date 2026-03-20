@@ -1,19 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base/home-assistant/
-  - dahuavto2mqtt-kustomize.yaml
+  - ../../base/ookla-speedtest/
 patches:
   - patch: |-
       apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
       metadata:
-        name: home-assistant
+        name: ookla-speedtest
         namespace: flux-system
       spec:
-        targetNamespace: home-assistant
+        targetNamespace: ookla-speedtest
     target:
       group: kustomize.toolkit.fluxcd.io
       version: v1
       kind: Kustomization
-      name: home-assistant
+      name: ookla-speedtest

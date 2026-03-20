@@ -8,12 +8,17 @@ resources:
   - k10/
   - kubernetes-dashboard/
   - mealie/
+  - mosquitto/
   - nextcloud/
   - ollama/
+  - ookla-speedtest/
   - openspeedtest/
   - portainer/
   - sonarqube/
   - speedtest-tracker/
   - uptime-kuma/
   - wordpress/
+  - zigbee2mqtt/
+  - zwave-js-ui/
+  - ups-nut/
   - cloudflare-tunnel/
