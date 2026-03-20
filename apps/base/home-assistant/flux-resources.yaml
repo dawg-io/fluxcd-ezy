@@ -11,7 +11,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://github.com/turbo5000c/home-assistant-kustomize
+  url: https://github.com/dawg-io/home-assistant-kustomize
   ref:
     semver: ">=0.0.0"  # home-assistant-kustomize uses git tags matching app release versions (e.g. 2026.3.2)
 ---

@@ -11,7 +11,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://github.com/turbo5000c/mealie-kustomize
+  url: https://github.com/dawg-io/mealie-kustomize
   ref:
     branch: main  # no git tags yet on this repo
 ---

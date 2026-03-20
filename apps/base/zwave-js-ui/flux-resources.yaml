@@ -11,7 +11,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://github.com/turbo5000c/zwave-js-ui-kustomize
+  url: https://github.com/dawg-io/zwave-js-ui-kustomize
   ref:
     branch: main
 ---
