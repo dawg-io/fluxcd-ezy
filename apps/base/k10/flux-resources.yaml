@@ -23,7 +23,7 @@ spec:
   chart:
     spec:
       chart: k10
-      version: "8.x"
+      version: "7.x"
       sourceRef:
         kind: HelmRepository
         name: kasten
