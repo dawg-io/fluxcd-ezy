@@ -11,7 +11,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://github.com/turbo5000c/zigbee2mqtt-kustomize
+  url: https://github.com/dawg-io/zigbee2mqtt-kustomize
   ref:
     branch: main
 ---
