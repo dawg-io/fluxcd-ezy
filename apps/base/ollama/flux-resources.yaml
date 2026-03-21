@@ -23,7 +23,7 @@ spec:
   chart:
     spec:
       chart: open-webui
-      version: "3.x"
+      version: "12.x"
       sourceRef:
         kind: HelmRepository
         name: open-webui
