@@ -23,7 +23,7 @@ spec:
   chart:
     spec:
       chart: uptime-kuma
-      version: "2.x"
+      version: "4.x"
       sourceRef:
         kind: HelmRepository
         name: irsigler
