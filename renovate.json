@@ -10,7 +10,7 @@
     {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["major"],
-      "automerge": false
+      "automerge": true
     },
     {
       "matchDatasources": ["helm"],
